@@ -1,14 +1,15 @@
 require "notifications/version"
+require "dbus"
 
 module Notifications
   NOTIF_SERVICE = 'org.freedesktop.Notifications'
-  NOTIF_OBJECT = "/org/freedesktop/Notifications"
+  NOTIF_OBJECT = '/org/freedesktop/Notifications'
 
   class NotificationService
     def initialize(template = nil)
       @bus = DBus::SessionBus.instance
       @service = @bus.service Notifications::NOTIF_SERVICE
-      @service_obj = @service.object(Notifications::NOTIF_OBJECT)
+      @service_obj = @service.object Notifications::NOTIF_OBJECT
       @supports = {}
       capabilities = @service_obj.GetCapabilities
       if capabilities then
