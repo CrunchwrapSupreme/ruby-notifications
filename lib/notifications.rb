@@ -31,7 +31,7 @@ module Notifications
     def send_notification(notify_temp, replace_previous=false)
       (replace_previous and notify_temp.id > 0) ? r_id = notify_temp.id : r_id = 0
 
-      id = @service_obj.Notify(notify_temp.appname, r_id
+      id = @service_obj.Notify(notify_temp.appname, r_id,
                           notify_temp.app_icon, notify_temp.summary,
                           notify_temp.body, notify_temp.actions.pack,
                           notify_temp.hints, notify_temp.timeout)
@@ -72,8 +72,16 @@ module Notifications
       @action_list << action
     end
 
+    def [](id)
+      @action_list[id]
+    end
+
+    def length
+      @action_list.length
+    end
+
     def pack
-      al = action_list.map do |action|
+      al = @action_list.map do |action|
         action.normalize
       end
 
