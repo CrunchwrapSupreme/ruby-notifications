@@ -24,14 +24,17 @@ Or install it yourself as:
 require 'notifications'
 # Create the service interface
 service = Notifications::NotificationService.new
+
+# Create a notification object
 # 'appname' is only required named parameter but isn't very
 # useful on its own.
 notification = Notifications::Notification.new(appname: "test",
                                                summary: "test",
                                                body: "A test notification")
 
-# Retrieve the service object. Due to DBus protocol we can't hide this detail
-# without compromising the ability to fail gracefully.
+# Retrieve the service object's methods internally.
+# May refactor as raised initializer exception in the
+# future.
 service.try_introspect
 
 # Send the notification
@@ -52,4 +55,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/CrunchwrapSupreme]/notifications.
+Bug reports and pull requests are welcome on GitHub at https://github.com/CrunchwrapSupreme/notifications.
