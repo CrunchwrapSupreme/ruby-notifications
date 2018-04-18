@@ -1,3 +1,5 @@
+require_relative './helpers.rb'
+
 describe Notifications do
   it "has a version number" do
     expect(Notifications::VERSION).not_to be nil
@@ -61,6 +63,39 @@ describe Notifications::ActionList do
           expect(ele).to eql(junk_desc + ((indx + 1) / 2).to_s)
         end
       }
+    end
+  end
+end
+
+describe Notifications::NotificationService do
+  describe "initialize" do
+    it "should succesfully connect to the session dbus and get the notification server's capabilities" do
+      service = Notifications::NotificationService.new
+    end
+  end
+
+  describe "try_introspect" do
+    it "should introspect the /org/freedesktop/Notification object" do
+      service = Notifications::NotificationService.new
+      Helpers.retry { service.try_introspect }
+      expect(service.introspected?).to eql(true)
+    end
+  end
+
+  describe "capabilities" do
+    it "should provide a list of capabilities for the notification server" do
+      service = Notifications::NotificationService.new
+      Helpers.retry { service.try_introspect }
+      expect(service.capabilities.empty?).to eql(false)
+    end
+  end
+
+  describe "notify" do
+    it "should send a notification to the notification server" do
+      service = Notifications::NotificationService.new
+      Helpers.retry { service.try_introspect }
+      notify = Notifications::Notification.new(appname: "test")
+      expect(service.send_notification(notify)).to be
     end
   end
 end
