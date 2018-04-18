@@ -22,14 +22,26 @@ Or install it yourself as:
 
 ```ruby
 require 'notifications'
-service = Notifications::NotificationService.new                # Create the service interface
-notification = Notifications::Notification.new(appname: "test", # appname is only required named parameter
+# Create the service interface
+service = Notifications::NotificationService.new
+# 'appname' is only required named parameter but isn't very
+# useful on its own.
+notification = Notifications::Notification.new(appname: "test",
                                                summary: "test",
                                                body: "A test notification")
-service.try_introspect                                          # Retrieve the service object. Due to DBus protocl can't hide this detail
-service.send_notification notification                          # Send the notification
-service.close_notification notification                         # Can also short-hand service.close_notification in this instance
-                                                                # since the interface tracks the last notification sent.
+
+# Retrieve the service object. Due to DBus protocol we can't hide this detail
+# without compromising the ability to fail gracefully.
+service.try_introspect
+
+# Send the notification
+service.send_notification notification
+
+# Can also short-hand service.close_notification in this instance
+# as the service interface tracks the last sent notification for
+# improved usability.
+service.close_notification notification
+
 ```
 
 ## Development
