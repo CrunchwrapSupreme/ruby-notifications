@@ -1,8 +1,6 @@
 # Notifications
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/notifications`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+A simple interface for the org.freedesktop.Notifications DBus service.
 
 ## Installation
 
@@ -22,7 +20,17 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'notifications'
+service = Notifications::NotificationService.new                # Create the service interface
+notification = Notifications::Notification.new(appname: "test", # appname is only required named parameter
+                                               summary: "test",
+                                               body: "A test notification")
+service.try_introspect                                          # Retrieve the service object. Due to DBus protocl can't hide this detail
+service.send_notification notification                          # Send the notification
+service.close_notification notification                         # Can also short-hand service.close_notification in this instance
+                                                                # since the interface tracks the last notification sent.
+```
 
 ## Development
 
@@ -32,4 +40,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/notifications.
+Bug reports and pull requests are welcome on GitHub at https://github.com/CrunchwrapSupreme]/notifications.
