@@ -1,10 +1,10 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "notifications/version"
+require "ruby-notifications/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "notifications"
+  spec.name          = "ruby-notifications"
   spec.version       = Notifications::VERSION
   spec.authors       = ["David Young"]
   spec.email         = ["david@davidyoung.space"]
